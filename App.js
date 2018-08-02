@@ -10,6 +10,11 @@ import {
 import { Constants, Location, Permissions } from 'expo';
 import LottieView from 'lottie-react-native';
 import _get from 'lodash/get';
+import axios from 'axios';
+
+const config = {
+  baseUrl: 'http://localhost:3000/'
+};
 
 export default class App extends React.Component {
   state = {
@@ -57,7 +62,19 @@ export default class App extends React.Component {
       });
     }
 
-    let location = await Location.getCurrentPositionAsync({});
+    let location = await Location.getCurrentPositionAsync({
+      timeInterval: 5000
+    });
+
+    try {
+      axios.post(config.baseUrl + '/helpMe', {
+        username: this.state.username,
+        location
+      });
+    } catch (e) {
+      // Maybe some logging
+    }
+
     this.setState({ location });
   };
 
