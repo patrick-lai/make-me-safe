@@ -11,6 +11,7 @@ import {
 import { Constants, Location, Permissions, LinearGradient } from 'expo';
 import LottieView from 'lottie-react-native';
 import _get from 'lodash/get';
+import _capitalize from 'lodash/capitalize';
 import axios from 'axios';
 import { material } from 'react-native-typography';
 
@@ -123,7 +124,10 @@ export default class App extends React.Component {
             <Text style={material.display3White}>Overwatch</Text>
           </View>
           <Text style={material.headlineWhite}>
-            You are registered as {this.state.username}
+            Its ok {_capitalize(this.state.username)}
+          </Text>
+          <Text style={material.body2White}>
+            Your friends and family are notified
           </Text>
           <View>
             {ready && (
