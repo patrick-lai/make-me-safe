@@ -6,7 +6,8 @@ import {
   StyleSheet,
   AlertIOS,
   AsyncStorage,
-  Dimensions
+  Dimensions,
+  TouchableOpacity
 } from 'react-native';
 import { Constants, Location, Permissions, LinearGradient } from 'expo';
 import LottieView from 'lottie-react-native';
@@ -38,14 +39,7 @@ export default class App extends React.Component {
     this.setState({ username });
 
     if (!username) {
-      AlertIOS.prompt(
-        'What is your name',
-        null,
-        async username =>
-          await AsyncStorage.setItem('USERNAME', username, () => {
-            this.setState({ username });
-          })
-      );
+      this.updateName();
     }
 
     setTimeout(() => {
@@ -76,7 +70,7 @@ export default class App extends React.Component {
   };
 
   sendSocketEvent = () => {
-    console.log(this.state.location);
+    // console.log(this.state.location);
   };
 
   _getLocationAsync = async () => {
@@ -92,7 +86,22 @@ export default class App extends React.Component {
     });
 
     this.setState({ location });
-    // this.sendSms();
+
+    // Prevent accidents
+    setTimeout(() => {
+      // this.sendSms();
+    }, 8000);
+  };
+
+  updateName = () => {
+    AlertIOS.prompt(
+      'What is your name',
+      null,
+      async username =>
+        await AsyncStorage.setItem('USERNAME', username, () => {
+          this.setState({ username });
+        })
+    );
   };
 
   render() {
@@ -123,9 +132,11 @@ export default class App extends React.Component {
           <View style={{ marginTop: height / 5, padding: 20 }}>
             <Text style={material.display3White}>Overwatch</Text>
           </View>
-          <Text style={material.headlineWhite}>
-            Its ok {_capitalize(this.state.username)}
-          </Text>
+          <View style={{ zIndex: 10 }}>
+            <Text style={material.headlineWhite} onPress={this.updateName}>
+              Its ok {_capitalize(this.state.username)}
+            </Text>
+          </View>
           <Text style={material.body2White}>
             Your friends and family are notified
           </Text>
