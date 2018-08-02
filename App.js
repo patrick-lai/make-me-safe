@@ -5,16 +5,21 @@ import {
   View,
   StyleSheet,
   AlertIOS,
-  AsyncStorage
+  AsyncStorage,
+  Dimensions
 } from 'react-native';
-import { Constants, Location, Permissions } from 'expo';
+import { Constants, Location, Permissions, LinearGradient } from 'expo';
 import LottieView from 'lottie-react-native';
 import _get from 'lodash/get';
 import axios from 'axios';
+import { material } from 'react-native-typography';
 
 const config = {
-  baseUrl: 'http://localhost:3000/'
+  baseUrl: 'http://172.20.10.10:3000',
+  pollInterval: 1000 * 5
 };
+
+const { height, width } = Dimensions.get('window');
 
 export default class App extends React.Component {
   state = {
@@ -41,6 +46,10 @@ export default class App extends React.Component {
           })
       );
     }
+
+    setTimeout(() => {
+      this.sendSocketEvent();
+    }, config.pollInterval);
   }
 
   componentWillMount() {
@@ -54,6 +63,21 @@ export default class App extends React.Component {
     }
   }
 
+  sendSms = () => {
+    try {
+      axios.post(config.baseUrl + '/help', {
+        username: this.state.username,
+        location: this.state.location
+      });
+    } catch (e) {
+      // Maybe some logging
+    }
+  };
+
+  sendSocketEvent = () => {
+    console.log(this.state.location);
+  };
+
   _getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted') {
@@ -66,16 +90,8 @@ export default class App extends React.Component {
       timeInterval: 5000
     });
 
-    try {
-      axios.post(config.baseUrl + '/helpMe', {
-        username: this.state.username,
-        location
-      });
-    } catch (e) {
-      // Maybe some logging
-    }
-
     this.setState({ location });
+    // this.sendSms();
   };
 
   render() {
@@ -95,22 +111,36 @@ export default class App extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Text>You are registered as {this.state.username}</Text>
-        <View>
-          {ready && (
-            <Text>
-              Long:{parseFloat(long).toFixed(2)}, Lat:
-              {parseFloat(lat).toFixed(2)}
-            </Text>
-          )}
-        </View>
-        <LottieView
-          style={{ marginTop: 100 }}
-          ref={animation => {
-            this.animation = animation;
+        <LinearGradient
+          colors={['#2C5364', '#203A43', '#0F2027']}
+          style={{
+            height: '100%',
+            width: '100%',
+            alignItems: 'center'
           }}
-          source={require('./lottie/location.json')}
-        />
+        >
+          <View style={{ marginTop: height / 5, padding: 20 }}>
+            <Text style={material.display3White}>Overwatch</Text>
+          </View>
+          <Text style={material.headlineWhite}>
+            You are registered as {this.state.username}
+          </Text>
+          <View>
+            {ready && (
+              <Text style={material.body1White}>
+                Long:{parseFloat(long).toFixed(2)}, Lat:
+                {parseFloat(lat).toFixed(2)}
+              </Text>
+            )}
+          </View>
+          <LottieView
+            style={{ marginTop: 100 }}
+            ref={animation => {
+              this.animation = animation;
+            }}
+            source={require('./lottie/location.json')}
+          />
+        </LinearGradient>
       </View>
     );
   }
