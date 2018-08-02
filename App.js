@@ -7,14 +7,15 @@ import {
   AlertIOS,
   AsyncStorage,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  StatusBar
 } from 'react-native';
 import { Constants, Location, Permissions, LinearGradient } from 'expo';
 import LottieView from 'lottie-react-native';
 import _get from 'lodash/get';
 import _capitalize from 'lodash/capitalize';
 import axios from 'axios';
-import { material } from 'react-native-typography';
+import { iOSUIKit } from 'react-native-typography';
 
 const config = {
   baseUrl: 'http://172.20.10.10:3000',
@@ -106,8 +107,8 @@ export default class App extends React.Component {
 
   render() {
     let text = 'Waiting..';
-    let long = _get(this.state, 'location.coords.longitude');
-    let lat = _get(this.state, 'location.coords.latitude');
+    let _lng = _get(this.state, 'location.coords.longitude');
+    let _lat = _get(this.state, 'location.coords.latitude');
 
     if (this.state.errorMessage) {
       text = this.state.errorMessage;
@@ -116,45 +117,47 @@ export default class App extends React.Component {
     }
 
     const { latitude, longitude } = text;
+    const lat = parseFloat(_lat).toFixed(2);
+    const lng = parseFloat(_lng).toFixed(2);
 
-    const ready = long && lat;
+    const ready = _lng && _lat;
 
     return (
       <View style={styles.container}>
+        <StatusBar hidden={true} />
         <LinearGradient
-          colors={['#2C5364', '#203A43', '#0F2027']}
+          colors={['#4568DC', '#B06AB3']}
           style={{
             height: '100%',
             width: '100%',
             alignItems: 'center'
           }}
         >
-          <View style={{ marginTop: height / 5, padding: 20 }}>
-            <Text style={material.display3White}>Overwatch</Text>
-          </View>
-          <View style={{ zIndex: 10 }}>
-            <Text style={material.headlineWhite} onPress={this.updateName}>
-              Its ok {_capitalize(this.state.username)}
+          <View style={{ marginTop: height / 6, padding: 20, zIndex: 10 }}>
+            <Text
+              style={iOSUIKit.largeTitleEmphasizedWhite}
+              onPress={this.updateName}
+            >
+              Stay calm {_capitalize(this.state.username)}!
             </Text>
           </View>
-          <Text style={material.body2White}>
+          <Text style={iOSUIKit.title3White}>
             Your friends and family are notified
           </Text>
-          <View>
-            {ready && (
-              <Text style={material.body1White}>
-                Long:{parseFloat(long).toFixed(2)}, Lat:
-                {parseFloat(lat).toFixed(2)}
-              </Text>
-            )}
-          </View>
           <LottieView
-            style={{ marginTop: 100 }}
+            style={{ marginTop: 0 }}
             ref={animation => {
               this.animation = animation;
             }}
             source={require('./lottie/location.json')}
           />
+          <View style={{ top: 300 }}>
+            {ready && (
+              <Text style={iOSUIKit.bodyWhite}>
+                {lat} {lng}
+              </Text>
+            )}
+          </View>
         </LinearGradient>
       </View>
     );
