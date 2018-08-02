@@ -16,9 +16,14 @@ import _get from 'lodash/get';
 import _capitalize from 'lodash/capitalize';
 import axios from 'axios';
 import { iOSUIKit } from 'react-native-typography';
+import lottieLocation from './lottie/location.json';
+import lottieMsg from './lottie/send_message_done.json';
+
+console.disableYellowBox = true;
 
 const config = {
-  baseUrl: 'http://172.20.10.10:3000',
+  baseUrl: 'http://192.168.1.135:3000',
+  // baseUrl: 'http://172.20.10.10:3000',
   pollInterval: 1000 * 5
 };
 
@@ -27,25 +32,20 @@ const { height, width } = Dimensions.get('window');
 export default class App extends React.Component {
   state = {
     location: null,
-    errorMessage: null
+    errorMessage: null,
+    lottie: 'msg'
   };
 
   async componentDidMount() {
     this.animation.play();
-    // Or set a specific startFrame and endFrame with:
-    this.animation.play(30, 120);
-
     const username = await AsyncStorage.getItem('USERNAME');
-
     this.setState({ username });
+    if (!username) this.updateName();
 
-    if (!username) {
-      this.updateName();
-    }
-
+    // Make it cool...
     setTimeout(() => {
-      this.sendSocketEvent();
-    }, config.pollInterval);
+      this.setState({ lottie: 'location' });
+    }, 1900);
   }
 
   componentWillMount() {
@@ -87,11 +87,7 @@ export default class App extends React.Component {
     });
 
     this.setState({ location });
-
-    // Prevent accidents
-    setTimeout(() => {
-      // this.sendSms();
-    }, 8000);
+    this.sendSms();
   };
 
   updateName = () => {
@@ -105,6 +101,33 @@ export default class App extends React.Component {
     );
   };
 
+  renderLottie = () => {
+    if (this.state.lottie === 'msg') {
+      return (
+        <LottieView
+          style={{ marginTop: 30, width: 200, height: 200 }}
+          ref={animation => {
+            this.animation = animation;
+          }}
+          source={lottieMsg}
+          loop={false}
+        />
+      );
+    }
+
+    return (
+      <LottieView
+        style={{ marginTop: 20, width: 250, height: 210 }}
+        ref={animation => {
+          this.animation = animation;
+          // Hacky but its fine
+          this.animation.play();
+        }}
+        source={lottieLocation}
+        loop={true}
+      />
+    );
+  };
   render() {
     let text = 'Waiting..';
     let _lng = _get(this.state, 'location.coords.longitude');
@@ -144,14 +167,8 @@ export default class App extends React.Component {
           <Text style={iOSUIKit.title3White}>
             Your friends and family are notified
           </Text>
-          <LottieView
-            style={{ marginTop: 0 }}
-            ref={animation => {
-              this.animation = animation;
-            }}
-            source={require('./lottie/location.json')}
-          />
-          <View style={{ top: 300 }}>
+          {this.renderLottie()}
+          <View style={{ top: 100 }}>
             {ready && (
               <Text style={iOSUIKit.bodyWhite}>
                 {lat} {lng}
