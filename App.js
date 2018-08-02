@@ -1,5 +1,12 @@
 import React from 'react';
-import { Platform, Text, View, StyleSheet } from 'react-native';
+import {
+  Platform,
+  Text,
+  View,
+  StyleSheet,
+  AlertIOS,
+  AsyncStorage
+} from 'react-native';
 import { Constants, Location, Permissions } from 'expo';
 import LottieView from 'lottie-react-native';
 import _get from 'lodash/get';
@@ -10,10 +17,25 @@ export default class App extends React.Component {
     errorMessage: null
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.animation.play();
     // Or set a specific startFrame and endFrame with:
     this.animation.play(30, 120);
+
+    const username = await AsyncStorage.getItem('USERNAME');
+
+    this.setState({ username });
+
+    if (!username) {
+      AlertIOS.prompt(
+        'What is your name',
+        null,
+        async username =>
+          await AsyncStorage.setItem('USERNAME', username, () => {
+            this.setState({ username });
+          })
+      );
+    }
   }
 
   componentWillMount() {
@@ -56,6 +78,7 @@ export default class App extends React.Component {
 
     return (
       <View style={styles.container}>
+        <Text>You are registered as {this.state.username}</Text>
         <View>
           {ready && (
             <Text>
