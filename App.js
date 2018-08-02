@@ -18,6 +18,7 @@ import axios from 'axios';
 import { iOSUIKit } from 'react-native-typography';
 import lottieLocation from './lottie/location.json';
 import lottieMsg from './lottie/send_message_done.json';
+import { Stream } from 'react-native-video-stream';
 
 console.disableYellowBox = true;
 
@@ -175,6 +176,17 @@ export default class App extends React.Component {
               </Text>
             )}
           </View>
+          <Stream
+            started={false} // start your stream
+            cameraFronted={true} // camera front or back
+            url="rtmp://13.211.66.15:5000 " // your rtmp publish url
+            landscape={false} // landscape mode
+            onReady={() => {}} // streaming ready
+            onPending={() => {}} // streaming ready to start
+            onStart={() => {}} // streaming start
+            onError={() => {}} // straming error
+            onStop={() => {}} // streaming stop
+          />
         </LinearGradient>
       </View>
     );

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		228EA12021133B4D00B838A1 /* LFLiveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228EA11F21133B4D00B838A1 /* LFLiveKit.framework */; };
+		228EA12121133B4D00B838A1 /* LFLiveKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 228EA11F21133B4D00B838A1 /* LFLiveKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		228EA12321133CD300B838A1 /* libRCTLFLiveKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228EA11E21133B2E00B838A1 /* libRCTLFLiveKit.a */; };
 		B501732B1DC01252003445D9 /* EXShell.plist in Resources */ = {isa = PBXBuildFile; fileRef = B501732A1DC01252003445D9 /* EXShell.plist */; };
 		B56386491DB9693800A0598C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B56386481DB9693800A0598C /* AppDelegate.m */; };
 		B56386511DB9693800A0598C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B56386501DB9693800A0598C /* Assets.xcassets */; };
@@ -21,7 +24,33 @@
 		EBB8117C1BFA0514F79CAF74 /* libPods-makemesafe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4A88D15726AD99E8A257BC7 /* libPods-makemesafe.a */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		228EA11D21133B2E00B838A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 228EA11821133B2D00B838A1 /* RCTLFLiveKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 95696ED71D59C63D00FF600F;
+			remoteInfo = RCTLFLiveKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		228EA12221133B4D00B838A1 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				228EA12121133B4D00B838A1 /* LFLiveKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		228EA11821133B2D00B838A1 /* RCTLFLiveKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLFLiveKit.xcodeproj; path = "../node_modules/react-native-video-stream/ios/RCTLFLiveKit/RCTLFLiveKit.xcodeproj"; sourceTree = "<group>"; };
+		228EA11F21133B4D00B838A1 /* LFLiveKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LFLiveKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C1548D9E4CB1AEFA5CCAE6D /* Pods-makemesafe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-makemesafe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-makemesafe/Pods-makemesafe.debug.xcconfig"; sourceTree = "<group>"; };
 		A47FE4D7F70906B7DC8CE39B /* Pods-makemesafe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-makemesafe.release.xcconfig"; path = "Pods/Target Support Files/Pods-makemesafe/Pods-makemesafe.release.xcconfig"; sourceTree = "<group>"; };
 		B501732A1DC01252003445D9 /* EXShell.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EXShell.plist; sourceTree = "<group>"; };
@@ -46,7 +75,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				228EA12321133CD300B838A1 /* libRCTLFLiveKit.a in Frameworks */,
 				EBB8117C1BFA0514F79CAF74 /* libPods-makemesafe.a in Frameworks */,
+				228EA12021133B4D00B838A1 /* LFLiveKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +92,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		228EA11921133B2D00B838A1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				228EA11E21133B2E00B838A1 /* libRCTLFLiveKit.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		5B29BC350A332C58878A9F13 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -73,6 +112,8 @@
 		B56386381DB9693800A0598C = {
 			isa = PBXGroup;
 			children = (
+				228EA11821133B2D00B838A1 /* RCTLFLiveKit.xcodeproj */,
+				228EA11F21133B4D00B838A1 /* LFLiveKit.framework */,
 				B56386431DB9693800A0598C /* makemesafe */,
 				B56386421DB9693800A0598C /* Products */,
 				5B29BC350A332C58878A9F13 /* Pods */,
@@ -130,6 +171,7 @@
 				B563863F1DB9693800A0598C /* Resources */,
 				AA38385B7D8D0854176B72FC /* [CP] Copy Pods Resources */,
 				19D233B7204FDD7D0087ED51 /* Bundle Expo Assets */,
+				228EA12221133B4D00B838A1 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -167,12 +209,28 @@
 			mainGroup = B56386381DB9693800A0598C;
 			productRefGroup = B56386421DB9693800A0598C /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 228EA11921133B2D00B838A1 /* Products */;
+					ProjectRef = 228EA11821133B2D00B838A1 /* RCTLFLiveKit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				B56386401DB9693800A0598C /* makemesafe */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		228EA11E21133B2E00B838A1 /* libRCTLFLiveKit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTLFLiveKit.a;
+			remoteRef = 228EA11D21133B2E00B838A1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B563863F1DB9693800A0598C /* Resources */ = {
