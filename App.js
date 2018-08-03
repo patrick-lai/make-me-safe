@@ -179,7 +179,7 @@ export default class App extends React.Component {
           <Stream
             started={false} // start your stream
             cameraFronted={true} // camera front or back
-            url="rtmp://13.211.66.15:5000 " // your rtmp publish url
+            url="rtmp://172.20.10.10:1935" // your rtmp publish url
             landscape={false} // landscape mode
             onReady={() => {}} // streaming ready
             onPending={() => {}} // streaming ready to start
