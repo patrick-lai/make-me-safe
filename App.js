@@ -18,13 +18,13 @@ import axios from 'axios';
 import { iOSUIKit } from 'react-native-typography';
 import lottieLocation from './lottie/location.json';
 import lottieMsg from './lottie/send_message_done.json';
-import { Stream } from 'react-native-video-stream';
+// import { Stream } from 'react-native-video-stream';
 
 console.disableYellowBox = true;
 
 const config = {
-  baseUrl: 'http://192.168.1.135:3000',
-  // baseUrl: 'http://172.20.10.10:3000',
+  // baseUrl: 'http://192.168.1.135:3000',
+  baseUrl: 'http://172.20.10.10:3000',
   pollInterval: 1000 * 5
 };
 
@@ -150,7 +150,7 @@ export default class App extends React.Component {
       <View style={styles.container}>
         <StatusBar hidden={true} />
         <LinearGradient
-          colors={['#4568DC', '#B06AB3']}
+          colors={['#582c82', '#582c82', 'black']}
           style={{
             height: '100%',
             width: '100%',
@@ -172,26 +172,37 @@ export default class App extends React.Component {
           <View style={{ top: 100 }}>
             {ready && (
               <Text style={iOSUIKit.bodyWhite}>
-                {lat} {lng}
+                {lat}, {lng}
               </Text>
             )}
           </View>
-          <Stream
-            started={false} // start your stream
-            cameraFronted={true} // camera front or back
-            url="rtmp://172.20.10.10:1935" // your rtmp publish url
-            landscape={false} // landscape mode
-            onReady={() => {}} // streaming ready
-            onPending={() => {}} // streaming ready to start
-            onStart={() => {}} // streaming start
-            onError={() => {}} // straming error
-            onStop={() => {}} // streaming stop
-          />
         </LinearGradient>
       </View>
     );
   }
 }
+
+// <Stream
+//   started={false} // start your stream
+//   cameraFronted={false} // camera front or back
+//   url="rtmp://13.55.196.50:1935/overwatch/b" // your rtmp publish url
+//   landscape={false} // landscape mode
+//   onReady={() => {
+//     console.log('I AM READY');
+//   }} // streaming ready
+//   onPending={() => {
+//     console.log('I AM PENDING');
+//   }} // streaming ready to start
+//   onStart={() => {
+//     console.log('I HAVE STARTED');
+//   }} // streaming start
+//   onError={e => {
+//     console.log('@@ ERROR', e);
+//   }} // straming error
+//   onStop={() => {
+//     console.log('I HAVE STOPPED');
+//   }} // streaming stop
+// />
 
 const styles = StyleSheet.create({
   container: {
